@@ -16,7 +16,7 @@ interface Social {
   icon: (_props: Props) => Element;
 }
 
-export const SOCIALS = []
+export const SOCIALS: Social[] = []
 // export const SOCIALS: Social[] = [
 //   {
 //     name: "GitHub",

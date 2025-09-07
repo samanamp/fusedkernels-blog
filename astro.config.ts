@@ -4,7 +4,6 @@ import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import expressiveCode from "astro-expressive-code";
-import { pluginCodeOutput } from "@fujocoded/expressive-code-output";
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import { SITE } from "./src/config";
 import remarkMath from 'remark-math';
@@ -19,7 +18,7 @@ export default defineConfig({
     }),
 
     expressiveCode({
-      plugins: [pluginLineNumbers(), pluginCodeOutput()],
+      plugins: [pluginLineNumbers()],
       themes: ['dracula'],
     }),
   ],
