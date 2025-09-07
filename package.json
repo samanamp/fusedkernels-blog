@@ -1,5 +1,5 @@
 {
-  "name": "astro-paper",
+  "name": "fusedkernels-blog",
   "type": "module",
   "version": "5.5.0",
   "scripts": {
@@ -15,12 +15,17 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.4.1",
+    "@expressive-code/plugin-line-numbers": "^0.41.3",
+    "@fujocoded/expressive-code-output": "^0.0.1",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/vite": "^4.1.11",
     "astro": "^5.12.0",
+    "astro-expressive-code": "^0.41.3",
     "dayjs": "^1.11.13",
     "lodash.kebabcase": "^4.1.1",
+    "rehype-katex": "^7.0.1",
     "remark-collapse": "^0.1.2",
+    "remark-math": "^6.0.0",
     "remark-toc": "^9.0.0",
     "satori": "^0.15.2",
     "sharp": "^0.34.2",

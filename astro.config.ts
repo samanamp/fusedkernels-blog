@@ -3,13 +3,12 @@ import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
-import {
-  transformerNotationDiff,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from "@shikijs/transformers";
-import { transformerFileName } from "./src/utils/transformers/fileName";
+import expressiveCode from "astro-expressive-code";
+import { pluginCodeOutput } from "@fujocoded/expressive-code-output";
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 import { SITE } from "./src/config";
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,21 +17,15 @@ export default defineConfig({
     sitemap({
       filter: page => SITE.showArchives || !page.endsWith("/archives"),
     }),
+
+    expressiveCode({
+      plugins: [pluginLineNumbers(), pluginCodeOutput()],
+      themes: ['dracula'],
+    }),
   ],
   markdown: {
-    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }]],
-    shikiConfig: {
-      // For more themes, visit https://shiki.style/themes
-      themes: { light: "min-light", dark: "night-owl" },
-      defaultColor: false,
-      wrap: false,
-      transformers: [
-        transformerFileName({ style: "v2", hideDot: false }),
-        transformerNotationHighlight(),
-        transformerNotationWordHighlight(),
-        transformerNotationDiff({ matchAlgorithm: "v3" }),
-      ],
-    },
+    remarkPlugins: [remarkToc, [remarkCollapse, { test: "Table of contents" }], remarkMath],
+    rehypePlugins: [rehypeKatex],
   },
   vite: {
     // eslint-disable-next-line

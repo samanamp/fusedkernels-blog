@@ -67,3 +67,14 @@ html[data-theme="dark"] {
 :target {
   scroll-margin-block: 1rem;
 }
+
+/* KaTeX dark mode styles */
+html[data-theme="dark"] .katex {
+  color: var(--foreground);
+}
+
+
+
+
+
+
