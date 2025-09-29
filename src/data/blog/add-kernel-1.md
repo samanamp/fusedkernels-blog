@@ -1,9 +1,10 @@
 ---
 title: "Vector Addition-part 1"
-pubDatetime: 2025-09-30T12:00:00Z
-modDatetime: 2025-09-30T12:00:00Z
+pubDatetime: 2025-09-28T12:00:00Z
+modDatetime: 2025-09-28T12:00:00Z
 author: "Saman"
 draft: false
+published: true
 tags:
   - Triton kernel
   - tech
