@@ -1,5 +1,5 @@
 ---
-title: "Vector Addition-part 1"
+title: "Vector Addition::P1::Triton Kernel"
 pubDatetime: 2025-09-28T12:00:00Z
 modDatetime: 2025-09-28T12:00:00Z
 author: "Saman"

@@ -3,7 +3,7 @@ title: "Sample Post: LaTeX and Code Blocks"
 pubDatetime: 2025-09-06T12:00:00Z
 modDatetime: 2025-09-06T12:00:00Z
 author: "The Fused Kernels Team"
-draft: false
+draft: true
 tags:
   - example
   - tech
