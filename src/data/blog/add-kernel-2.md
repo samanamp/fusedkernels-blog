@@ -97,7 +97,7 @@ Now let's go to the next file, the caller:
 
 ```cpp
 #include <ATen/ATen.h>          // ATen: PyTorch Tensor library (like numpy)
-#include <c10/cuda/CUDAGaurd.h> // Ensures we're on the right GPU device
+#include <c10/cuda/CUDAGuard.h> // Ensures we're on the right GPU device
 #include <c10/cuda/CUDAStream.h>// manages Cuda execution streams
 #include <cuda_runtime.h>       // Core Cuda functionality
 #include <torch/extension.h>    // Magic glue between C++ and Python
@@ -131,7 +131,7 @@ at::Tensor add_cuda(at::Tensor x, at::Tensor y) {
   const float *y_ptr = y.data_ptr<float>();
   float *out_ptr = out.data_ptr<float>();
 
-  cudaStream_t stream = c10::cuda::getCurrentCudaStream();
+  cudaStream_t stream = c10::cuda::getCurrentCUDAStream();
   launch_add_kernel(x_ptr, y_ptr, out_ptr, (int)n_elements,
                     blocks, threads, stream);
   return out;
