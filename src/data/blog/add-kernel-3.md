@@ -91,6 +91,8 @@ Alternative options are time.time() or time.perf_counter(). There are issues wit
 # Results
 Awesome, now let's see the results.
 
+Vector addition is a simple operation, so it never becomes truly "compute bound" in traditional sense. In the following graphs, we're always bound by how fast we can move the data to the gpu. And toward the end, we hit the bandwidth ceiling. For example for A100-40G, we see max nominal HBM bandwidth as 1.56 TB/s, and we get close to saturation with 1.36 TB/s. From the graph, there is still space to push a bit more.
+
 ## GTX1080
 ![GTX1080](../../assets/images/GTX1080.png)
 ## GTX5060
