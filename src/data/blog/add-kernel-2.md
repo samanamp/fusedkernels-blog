@@ -3,7 +3,6 @@ title: "Vector Addition::P2::Cuda Kernel"
 pubDatetime: 2025-10-05T12:00:00Z
 modDatetime: 2025-10-05T12:00:00Z
 author: "Saman"
-draft: false
 published: true
 tags:
   - Cuda kernel
