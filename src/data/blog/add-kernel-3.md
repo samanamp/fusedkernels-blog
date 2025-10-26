@@ -95,7 +95,7 @@ Vector addition is a simple operation, so it never becomes truly "compute bound"
 
 ## GTX1080
 ![GTX1080](../../assets/images/GTX1080.png)
-## GTX5060
+## RTX5060
 You can see a perf bump in the middle with this GPU type. I tried with Claude Sonnet to understand why this is happening, but no real good answers. Please share if you know the cause.
 ![GTX5060](../../assets/images/GTX5060.png)
 ## A100-40GB
