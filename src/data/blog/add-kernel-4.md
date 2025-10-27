@@ -59,3 +59,7 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m){
 
 With this, we do observe some perf improvement. We're closer to Triton and Torch version.
 ![threads-optim](../../assets/images/art3-threads.png)
+
+## Vectorized Memory Access and Warp-Level Efficiency
+
+![vector-loading](../../assets/images/art3-vector-loading.png)
