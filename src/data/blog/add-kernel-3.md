@@ -78,6 +78,9 @@ def benchmark(size, provider):
     # Return bandwidth for median, fastest (max_ms → min bandwidth), and slowest (min_ms → max bandwidth)
     # Note: max_ms gives min bandwidth and vice versa
     return gbps(ms), gbps(max_ms), gbps(min_ms)
+
+# Now run the benchmark
+benchmark.run(print_data=True, show_plots=True)
 ```
 
 I hope annotations are good enough, still there are some questions it doesn't answer.
