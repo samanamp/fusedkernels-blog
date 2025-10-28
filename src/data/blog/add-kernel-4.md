@@ -199,3 +199,8 @@ __global__ void add_kernel_vec4_looped(const float *__restrict__ x,
 
 
 ![grid-stride-loop](../../assets/images/art3-looped.png)
+
+Now we are ready to conclude the vector addition and go to the next one. This journey was longer than I imagined.
+But totally worths the pain. Try to replicate the work or even make it better yourself. I've shared the code under `source-code` folder in the site's repo.
+
+Good luck! I'm excited for the next kernel series. That's fused softmax.
