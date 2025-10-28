@@ -107,4 +107,61 @@ I've also annotated it with number of reads and writes.
 # Triton Implementation
 Now that we have this, do you think we can implement Triton without getting much help from the Triton tutorial?
 
-TBH, I'm not sure, but worths trying.
+TBH, I'm not sure, but worths trying. With a some help from Gemini AI, got to this:
+
+```python
+@triton.jit
+def softmax_kernel(output_ptr, input_ptr, input_row_stride, output_row_stride, n_rows, n_cols, BLOCK_SIZE: tl.constexpr):
+    # tl.device_print("BLOCK_SIZE", BLOCK_SIZE)
+    pid = tl.program_id(0)
+    row_start_ptr = input_ptr + pid * input_row_stride
+    col_offsets = tl.arange(0, BLOCK_SIZE)
+    input_ptrs = row_start_ptr + col_offsets
+    # Load the row data into a block. Use a mask for rows shorter than BLOCK_SIZE.
+    mask = col_offsets < n_cols
+    row = tl.load(input_ptrs, mask=mask, other=-float('inf'))
+    row_max = tl.max(row, axis=0)
+    numerator = tl.exp(row - row_max)
+    denominator = tl.sum(numerator, axis=0)
+    output = numerator / denominator
+    
+    # Store the result back to global memory.
+    output_ptrs = output_ptr + pid * output_row_stride + col_offsets
+    tl.store(output_ptrs, output, mask=mask)
+
+def triton_softmax(x: torch.Tensor):
+    if not x.is_cuda:
+        x = x.cuda()
+
+    n_rows, n_cols = x.shape
+    output = torch.empty_like(x)
+    grid = (n_rows,)
+
+    softmax_kernel[grid](
+        output_ptr=output, 
+        input_ptr=x, 
+        input_row_stride=x.stride(0),
+        output_row_stride=output.stride(0),
+        n_rows=n_rows,
+        n_cols=n_cols,
+        BLOCK_SIZE=triton.next_power_of_2(n_cols)
+    )
+    
+    return output
+```
+
+You can see it's pretty naive, we are launching 1 kernel per row.
+
+## Benchmark
+I've added the Triton tutorial's kernel (let's call it BTK-Better Triton Kernel) to see how I'm comparing with a complex kernel.
+
+As I'm using RTX5060, the BTK was getting to OOM (out of memory) pretty fast, so I lowered the `num_stages = 1`.
+
+Now, let's see the result:
+![softmax-p1-all](../../assets/images/softmax-p1-all.png)
+
+The good news is that my Triton kernel was better than everyone from the beginning up to $$ N=14080 $$.Bad news is that I don't know if any model is having vocab_size equal or less than that amount these days. For context, M is batchsize, N is vocabsize in real world applications. Modern models like DeepSeek R1 have $$ vocab-size=128k $$. But let's say I stood a chance sometime in the history of LLMs.
+
+The BTK dies sometime after my kernel is gone. But damn, Torch goes strong.
+
+For the next article, I don't know, should I put some time to optimize the current kernel or just go to Cuda?
