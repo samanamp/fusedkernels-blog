@@ -1,5 +1,5 @@
 ---
-title: "Vector Addition::P3::Optimizing"
+title: "Vector Addition::P4::Optimizing"
 pubDatetime: 2025-10-26T12:00:00Z
 modDatetime: 2025-10-26T12:00:00Z
 author: "Saman"
