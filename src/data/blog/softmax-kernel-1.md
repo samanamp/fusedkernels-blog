@@ -1,5 +1,5 @@
 ---
-title: "Fused Softmax::P1::Naive & Torch Implementation"
+title: "Fused Softmax::P1::Naive & Triton Implementation"
 pubDatetime: 2025-11-02T12:00:00Z
 modDatetime: 2025-11-02T12:00:00Z
 author: "Saman"
