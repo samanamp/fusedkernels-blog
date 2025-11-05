@@ -347,29 +347,29 @@ extern "C" void launch_softmax_kernel(const float *x, float *out,
     // softmax_kernel_step2<<<blocks, threads, shared_mem, stream>>>(x, out, input_row_stride, output_row_stride, n_rows, n_cols);
 
     // step 3
-    // size_t shmem = threads * sizeof(float);
+    size_t shmem = threads * sizeof(float);
 
-    // uintptr_t x_addr = reinterpret_cast<uintptr_t>(x);
-    // uintptr_t out_addr = reinterpret_cast<uintptr_t>(out);
+    uintptr_t x_addr = reinterpret_cast<uintptr_t>(x);
+    uintptr_t out_addr = reinterpret_cast<uintptr_t>(out);
 
-    // bool base_aligned = ((x_addr % 16) == 0) && ((out_addr % 16) == 0);
-    // bool stride_aligned = ((input_row_stride % 4) == 0) && ((output_row_stride % 4) == 0);
-    // bool width_aligned = ((n_cols % 4) == 0);
-    // bool use_vec4 = base_aligned && stride_aligned && width_aligned;
+    bool base_aligned = ((x_addr % 16) == 0) && ((out_addr % 16) == 0);
+    bool stride_aligned = ((input_row_stride % 4) == 0) && ((output_row_stride % 4) == 0);
+    bool width_aligned = ((n_cols % 4) == 0);
+    bool use_vec4 = base_aligned && stride_aligned && width_aligned;
 
-    // if (use_vec4)
-    // {
-    //     softmax_kernel_step3_vec4<<<blocks, threads, shmem, stream>>>(
-    //         x, out, input_row_stride, output_row_stride, n_rows, n_cols);
-    // }
-    // else
-    // {
-    //     softmax_kernel_step2<<<blocks, threads, shmem, stream>>>(
-    //         x, out, input_row_stride, output_row_stride, n_rows, n_cols);
-    // }
+    if (use_vec4)
+    {
+        softmax_kernel_step3_vec4<<<blocks, threads, shmem, stream>>>(
+            x, out, input_row_stride, output_row_stride, n_rows, n_cols);
+    }
+    else
+    {
+        softmax_kernel_step2<<<blocks, threads, shmem, stream>>>(
+            x, out, input_row_stride, output_row_stride, n_rows, n_cols);
+    }
 
     // step 4
-    size_t shmem = 32 * sizeof(float); // small buffer (one per warp)
-    softmax_kernel_step4<<<blocks, threads, shmem, stream>>>(
-        x, out, input_row_stride, output_row_stride, n_rows, n_cols);
+    // size_t shmem = 32 * sizeof(float); // small buffer (one per warp)
+    // softmax_kernel_step4<<<blocks, threads, shmem, stream>>>(
+    //     x, out, input_row_stride, output_row_stride, n_rows, n_cols);
 }
