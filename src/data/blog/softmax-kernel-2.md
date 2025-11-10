@@ -9,7 +9,6 @@ tags:
   - Benchmarking
 description: "Debugging triton kernel optimization issue"
 ---
-
 As much as I wanted to let it go and jump into Cuda kernel implementation, I couldn't. That nagging voice that says let's see why triton kerenel drops dead.
 
 Now let's get into it. Zooming in, noticed that drops occurs on exact powers of 2.
