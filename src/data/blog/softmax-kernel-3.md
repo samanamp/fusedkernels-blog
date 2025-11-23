@@ -1,7 +1,7 @@
 ---
 title: "Fused Softmax::P3::Cuda Kernel"
 pubDatetime: 2025-11-16T12:00:00Z
-modDatetime: 2025-11-16T12:00:00Z
+modDatetime: 2025-11-18T12:00:00Z
 author: "Saman"
 draft: false
 published: true
