@@ -8,8 +8,8 @@
 __global__ void matmul_kernel_cache(float *out, const float *a, const float *b,
                                     int M, int N, int K)
 {
-    int row = blockIdx.y * blockWidth.y + threadIdx.y;
-    int col = blockIdx.x * blockWidth.x + threadIdx.x;
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
 
     __shared__ float sA[TILE_WIDTH][TILE_WIDTH], sB[TILE_WIDTH][TILE_WIDTH];
     if (row < M && col < N)
@@ -53,8 +53,8 @@ extern "C" void launch_matmul_kernel(float *out, const float *a, const float *b,
 __global__ void matmul_kernel_cache_coalescing(float *out, const float4 *a, const float4 *b_T,
                                                int M, int N, int K)
 {
-    int row = blockIdx.y * blockWidth.y + threadIdx.y;
-    int col = blockIdx.x * blockWidth.x + threadIdx.x;
+    int row = blockIdx.y * blockDim.y + threadIdx.y;
+    int col = blockIdx.x * blockDim.x + threadIdx.x;
 
     if (row < M && col < N)
     {
@@ -72,12 +72,12 @@ __global__ void matmul_kernel_cache_coalescing(float *out, const float4 *a, cons
             if (a_kchunk < K4)
                 sA[threadIdx.y][threadIdx.x] = a[row * K4 + a_kchunk];
             else
-                sA[threadIdx.y][threadIdx.x] = make_float(0.f, 0.f, 0.f, 0.f);
+                sA[threadIdx.y][threadIdx.x] = make_float4(0.f, 0.f, 0.f, 0.f);
 
             if (b_kchunk < K4)
                 sB[threadIdx.y][threadIdx.x] = b_T[col * K4 + b_kchunk];
             else
-                sB[threadIdx.y][threadIdx.x] = make_float(0.f, 0.f, 0.f, 0.f);
+                sB[threadIdx.y][threadIdx.x] = make_float4(0.f, 0.f, 0.f, 0.f);
 
             __syncthreads();
 

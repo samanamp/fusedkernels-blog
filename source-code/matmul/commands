@@ -1,0 +1,3 @@
+nsys profile --trace=cuda,nvtx,osrt python profiler.py
+/usr/lib/nsight-systems/host-linux-x64/QdstrmImporter -i report1.qdstrm -o report1.nsys-rep
+ nsys stats report1.nsys-rep
